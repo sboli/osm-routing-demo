@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { tileLayer, latLng, LeafletMouseEvent, LatLng, Map, Marker, Icon, Point } from 'leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import * as L from 'leaflet';
+import 'leaflet-routing-machine';
 
 @Component({
   selector: 'app-root',
@@ -44,5 +47,15 @@ export class AppComponent {
     marker.addTo(this.map);
     marker.openPopup();
     this.markers.push(pos);
+    this.updateRouting();
+  }
+
+  updateRouting() {
+    const routing = L.Routing.control({
+      waypoints: this.markers,
+      routeWhileDragging: true,
+      showAlternatives: true
+    });
+    routing.addTo(this.map);
   }
 }
