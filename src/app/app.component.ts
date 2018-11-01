@@ -9,6 +9,7 @@ import { tileLayer, latLng, LeafletMouseEvent, LatLng, Map, Marker, Icon, Point 
 export class AppComponent {
   title = 'osm-routing-demo';
   map = undefined;
+  markers = [];
   options = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,11 +36,13 @@ export class AppComponent {
       iconUrl: 'leaflet/marker-icon.png',
       shadowUrl: 'leaflet/marker-shadow.png',
       iconAnchor: anchor,
-      shadowAnchor: anchor
+      shadowAnchor: anchor,
+      popupAnchor: new Point(0, -anchor.y)
     });
     marker.setIcon(icon);
+    marker.bindPopup('Marker N° ' + (this.markers.length + 1));
     marker.addTo(this.map);
+    marker.openPopup();
+    this.markers.push(pos);
   }
-
-
 }
